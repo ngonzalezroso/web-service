@@ -1,0 +1,14 @@
+{
+  "name": "sorting",
+  "version": "1.0.0",
+  "description": "Sorting Challenge",
+  "main": "index.js",
+  "author": "Nicolas Gonzalez",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.3.1"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
