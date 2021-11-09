@@ -1,7 +1,10 @@
 // creating this config file to mock on tests
-module.exports = {
-  /**
-   * Length of TOP Ips array
-   */
-  TOP_ARRAY_LENGTH: 100
+
+/**
+ * Length of TOP Ips array
+ */
+const TOP_ARRAY_LENGTH = 100;
+
+export default {
+  TOP_ARRAY_LENGTH,
 }

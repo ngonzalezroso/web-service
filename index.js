@@ -1,5 +1,4 @@
-/* eslint-disable camelcase */
-const CONFIG = require('./config');
+import CONFIG from './config'
 // will store all IPs (as keys) and the amount of request for each IP (value)
 let IP_HASH = {};
 // this array it is ordered from greatest to least amount of requests
@@ -9,11 +8,14 @@ let lastPositionInserted = -1;
 /**
  * Will return the position in the array (TOP_100) where IP should be inserted
  * @param {String} ip - ip that we want to insert on the array
- * * @param {Number} index - position of the element on TOP_100 array
+ * @param {Number} positionInArray - position of the element on TOP_100 array
+ * @return {Number} position in the array where to insert
  */
 function getPositionToInsert(ip, positionInArray) {
   const amount = IP_HASH[ip];
-  // using this variable to move across the array. Using positionInArray (if the element is already in the array), or lastPositionInserted;
+  // using this variable to move across the array.
+  // Using positionInArray -1 (if the element is already in the array, so we can start comparing with the next element)
+  // or lastPositionInserted;
   let index = positionInArray !== -1 ? positionInArray - 1 : lastPositionInserted;
   let ipToCompare = TOP_100[index];
   let amountToCompare = IP_HASH[ipToCompare];
@@ -60,7 +62,7 @@ function insertOrdered(ip) {
     TOP_100 = firstHalf.concat(ip, secondHalf);
   } else {
     const currentElementInPositionToInsert = IP_HASH[TOP_100[positionToInsert]];
-    if (positionToInsert === CONFIG.TOP_ARRAY_LENGTH ||currentElementInPositionToInsert >= amount) {
+    if (positionToInsert === CONFIG.TOP_ARRAY_LENGTH || currentElementInPositionToInsert >= amount) {
       // the last N elements have the same amount of requests as IP and the array is full. So we don't insert it
       // if the array wasn't full, the IP would be inserted on the previous check
       return;
@@ -77,26 +79,19 @@ function insertOrdered(ip) {
   }
 }
 
-function top100() {
+export function top100() {
   // just in case there's int CONFIG.TOP_ARRAY_LENGTH different IPs
   return TOP_100.filter(Boolean);
 }
 
-function clear() {
+export function clear() {
   TOP_100 = new Array(CONFIG.TOP_ARRAY_LENGTH);
   IP_HASH = {};
   lastPositionInserted = -1;
 }
 
-function request_handled(ip_address) {
+export function request_handled(ip_address) {
   const requestAmount = (IP_HASH[ip_address] ?? 0) + 1;
   IP_HASH[ip_address] = requestAmount;
   insertOrdered(ip_address);
-}
-
-
-module.exports = {
-  request_handled,
-  top100,
-  clear,
 }
