@@ -18,3 +18,8 @@ I would spend more time creating tests, specifically with bigger iterations and 
 - `clear`
 
   The `clear` function runtime complexity is constant time 0(1) as we just clear the variable values and assign new ones.
+
+
+### Tests
+
+For tests check `index.test.js` file
